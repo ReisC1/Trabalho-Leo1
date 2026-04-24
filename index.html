@@ -592,12 +592,12 @@
    CONFIGURAÇÃO — substitua os caminhos pelos seus MP4
    ═══════════════════════════════════════════════════════ */
 const audioFiles = {
-  0: '',   
-  1: 'audio_convertido1.mp4',   
-  2: 'audio_convertido.mp4',   
-  3: '',   
-  4: 'audio_convertido2.mp4',   
-  5: '',
+  0: '',   // capa   → ex: 'audio/capa.mp4'
+  1: '',   // slide 1
+  2: '',   // slide 2
+  3: '',   // slide 3
+  4: '',   // slide 4
+  5: '',   // slide 5
 };
 
 /* ═══════════════════════════════════════════════════════
@@ -658,6 +658,19 @@ function loadSlideAudio(idx) {
   audioDuration.textContent = '0:00';
   btnPlayPause.textContent = '▶';
   btnPlayPause.title = 'Play';
+
+  // Slide 0 (capa) não tem narração — oculta controles do player
+  const playerControls = document.querySelector('.player-controls');
+  const progressWrap   = document.querySelector('.audio-progress-wrap');
+  if (idx === 0) {
+    playerControls.style.display = 'none';
+    progressWrap.style.display   = 'none';
+    noAudioHint.style.display    = 'none';
+    return;
+  } else {
+    playerControls.style.display = 'flex';
+    progressWrap.style.display   = 'flex';
+  }
 
   const src = audioFiles[idx];
   if (!src) {
