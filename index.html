@@ -246,25 +246,128 @@
     transition: transform 0.2s, box-shadow 0.2s; position: relative; z-index: 2;
   }
   .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
- 
-  /* NARRAÇÃO FLUTUANTE */
+
+  /* ─── NARRAÇÃO FLUTUANTE + PLAYER ─── */
   .narr-box {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-    background: rgba(14,26,20,0.92); backdrop-filter: blur(12px);
-    border: 0.5px solid rgba(184,240,212,0.2); border-radius: 12px;
-    padding: 12px 20px; max-width: 680px; width: calc(100% - 48px);
-    font-size: 13px; font-style: italic; color: rgba(255,255,255,0.6);
-    line-height: 1.6; text-align: center; z-index: 99;
+    background: rgba(10, 21, 16, 0.96); backdrop-filter: blur(16px);
+    border: 0.5px solid rgba(184,240,212,0.2); border-radius: 16px;
+    padding: 14px 18px 12px;
+    max-width: 720px; width: calc(100% - 48px);
+    z-index: 99;
+    display: flex; flex-direction: column; gap: 10px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
   }
-  .narr-box span {
-    color: var(--lime); font-style: normal; font-size: 10px; font-weight: 600;
-    letter-spacing: 0.1em; display: block; margin-bottom: 4px; text-transform: uppercase;
+
+  .narr-top {
+    display: flex; align-items: flex-start; gap: 10px;
   }
- 
+
+  .narr-label-wrap { flex: 1; min-width: 0; }
+
+  .narr-label-tag {
+    color: var(--lime); font-style: normal; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; display: block; text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  .narr-text-content {
+    font-size: 12px; font-style: italic; color: rgba(255,255,255,0.55);
+    line-height: 1.55;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── CONTROLES DO PLAYER ── */
+  .player-controls {
+    display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  }
+
+  .ctrl-btn {
+    display: flex; align-items: center; justify-content: center;
+    border: none; border-radius: 10px; cursor: pointer;
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
+    outline: none;
+  }
+  .ctrl-btn:active { transform: scale(0.93); }
+
+  /* Play / Pause */
+  .btn-play {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--green2);
+    color: var(--white); font-size: 18px;
+    box-shadow: 0 4px 16px rgba(36,150,106,0.45);
+  }
+  .btn-play:hover { background: var(--lime); color: var(--dark); box-shadow: 0 4px 24px rgba(184,240,212,0.4); }
+
+  /* Stop */
+  .btn-stop {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.07);
+    border: 0.5px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.6); font-size: 14px;
+  }
+  .btn-stop:hover { background: rgba(217,79,61,0.2); border-color: rgba(217,79,61,0.4); color: #F08070; }
+
+  /* Velocidade — grupo de 2 pílulas */
+  .speed-group {
+    display: flex; align-items: center; gap: 4px;
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 4px 6px;
+  }
+  .speed-label {
+    font-size: 10px; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.08em; text-transform: uppercase; padding: 0 4px;
+    font-family: 'Syne', sans-serif;
+  }
+  .btn-speed {
+    width: 32px; height: 26px; border-radius: 6px;
+    background: transparent;
+    border: 0.5px solid transparent;
+    color: rgba(255,255,255,0.5); font-size: 11px;
+    letter-spacing: 0.02em;
+  }
+  .btn-speed:hover { background: rgba(36,150,106,0.2); color: var(--lime); border-color: rgba(36,150,106,0.3); }
+  .btn-speed.speed-active { background: var(--green2); color: var(--white); border-color: var(--green2); }
+
+  /* Barra de progresso do áudio */
+  .audio-progress-wrap {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .audio-time {
+    font-size: 10px; font-weight: 600; color: var(--muted);
+    font-family: 'Syne', sans-serif; white-space: nowrap; min-width: 32px;
+  }
+  .audio-bar-track {
+    flex: 1; height: 3px; background: rgba(255,255,255,0.08);
+    border-radius: 4px; cursor: pointer; position: relative; overflow: hidden;
+  }
+  .audio-bar-fill {
+    height: 100%; background: var(--green2); border-radius: 4px;
+    width: 0%; transition: width 0.25s linear;
+    position: relative;
+  }
+  .audio-bar-fill::after {
+    content: ''; position: absolute; right: -1px; top: 50%;
+    transform: translateY(-50%);
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--lime); box-shadow: 0 0 6px rgba(184,240,212,0.6);
+  }
+
+  /* Indicador "sem áudio" */
+  .no-audio-hint {
+    font-size: 10px; color: var(--muted); font-style: italic;
+    text-align: center; padding: 2px 0;
+    display: none;
+  }
+
   @media (max-width: 600px) {
     .problem-grid { grid-template-columns: 1fr; }
     .slide { padding: 40px 20px; }
     #s5::after { display: none; }
+    .narr-top { flex-direction: column; }
+    .player-controls { align-self: flex-end; }
   }
 </style>
 </head>
@@ -430,77 +533,244 @@
  
 </div>
  
-<!-- NARRAÇÃO FLUTUANTE -->
+<!-- ─── NARRAÇÃO FLUTUANTE COM PLAYER ─── -->
 <div class="narr-box" id="narr-box">
-  <span id="narr-label">🎙 Capa — MindAcademy</span>
-  <span id="narr-text">Role para baixo ou use as setas do teclado para navegar pelo pitch.</span>
+
+  <div class="narr-top">
+    <!-- Texto da narração -->
+    <div class="narr-label-wrap">
+      <span class="narr-label-tag" id="narr-label">🎙 Capa — MindAcademy</span>
+      <div class="narr-text-content" id="narr-text">Role para baixo ou use as setas do teclado para navegar pelo pitch.</div>
+    </div>
+
+    <!-- Controles -->
+    <div class="player-controls">
+
+      <!-- Play / Pause -->
+      <button class="ctrl-btn btn-play" id="btn-play-pause" onclick="togglePlayPause()" title="Play / Pause">
+        ▶
+      </button>
+
+      <!-- Stop -->
+      <button class="ctrl-btn btn-stop" id="btn-stop" onclick="stopAudio()" title="Parar narração">
+        ■
+      </button>
+
+      <!-- Velocidade -->
+      <div class="speed-group">
+        <span class="speed-label">vel.</span>
+        <button class="ctrl-btn btn-speed" data-speed="1"   onclick="setSpeed(1)"   title="Velocidade normal">1×</button>
+        <button class="ctrl-btn btn-speed speed-active" data-speed="1.25" onclick="setSpeed(1.25)" title="Velocidade 1.25×">1.25×</button>
+        <button class="ctrl-btn btn-speed" data-speed="1.5" onclick="setSpeed(1.5)" title="Velocidade 1.5×">1.5×</button>
+        <button class="ctrl-btn btn-speed" data-speed="2"   onclick="setSpeed(2)"   title="Velocidade 2×">2×</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Barra de progresso do áudio -->
+  <div class="audio-progress-wrap">
+    <span class="audio-time" id="audio-current">0:00</span>
+    <div class="audio-bar-track" id="audio-bar-track" onclick="seekAudio(event)">
+      <div class="audio-bar-fill" id="audio-bar-fill"></div>
+    </div>
+    <span class="audio-time" id="audio-duration">0:00</span>
+  </div>
+
+  <!-- Aviso quando não há arquivo de áudio carregado -->
+  <div class="no-audio-hint" id="no-audio-hint">
+    ℹ Adicione arquivos MP4/MP3 ao objeto <code>audioFiles</code> no JS para ativar o player.
+  </div>
+
 </div>
- 
+
+<!-- Elemento de áudio oculto -->
+<audio id="audio-player" preload="none"></audio>
+
 <script>
-const slides = document.querySelectorAll('.slide');
-const dots   = document.querySelectorAll('.dot');
-const bar    = document.getElementById('progress-bar');
-const narrLabel = document.getElementById('narr-label');
-const narrText  = document.getElementById('narr-text');
- 
+/* ═══════════════════════════════════════════════════════
+   CONFIGURAÇÃO — substitua os caminhos pelos seus MP4
+   ═══════════════════════════════════════════════════════ */
+const audioFiles = {
+  0: '',   // capa   → ex: 'audio/capa.mp4'
+  1: '',   // slide 1
+  2: '',   // slide 2
+  3: '',   // slide 3
+  4: '',   // slide 4
+  5: '',   // slide 5
+};
+
+/* ═══════════════════════════════════════════════════════
+   NARRAÇÕES (texto na barra inferior)
+   ═══════════════════════════════════════════════════════ */
 const narrations = [
-  {
-    label: '🎙 Capa — MindAcademy',
-    text: 'Role para baixo ou use as setas do teclado para navegar pelo pitch.'
-  },
-  {
-    label: '🎙 Narração — Cena 1 · 0:00–0:36',
-    text: '"Imagine um aluno que entrou na faculdade cheio de expectativas. Mas aos poucos, as faltas foram aumentando. As notas foram caindo. E ninguém percebeu. Não porque ninguém se importava — mas porque não havia nenhum sistema para identificar esse aluno a tempo. Segundo a Organização Mundial da Saúde, 1 em cada 4 universitários sofre com ansiedade ou depressão durante a graduação. E a grande maioria nunca recebe nenhum tipo de acompanhamento especializado. Isso não é um problema de saúde individual. É um problema institucional. E precisa de uma solução institucional."'
-  },
-  {
-    label: '🎙 Narração — Cena 2 · 0:36–1:12',
-    text: '"As faculdades já possuem serviços de apoio psicológico. Psicólogos, assistentes sociais, núcleos de apoio. Mas existe um abismo entre esses serviços e os alunos que mais precisam deles. Primeiro: a burocracia. Quem está em sofrimento raramente tem energia para navegar em sistemas complexos, preencher formulários ou ligar para marcar consultas. Segundo: a invisibilidade. O aluno que se isola, que para de participar, que desaparece da turma — esse aluno não aparece em nenhum relatório. Terceiro: a demora. Quando finalmente alguém pede ajuda, o problema já escalou para algo muito mais difícil de tratar. E o impacto aparece nas notas, nas faltas, nas desistências — e, nos casos mais graves, em situações que nenhuma instituição quer enfrentar."'
-  },
-  {
-    label: '🎙 Narração — Cena 3 · 1:12–1:52',
-    text: '"É para resolver esse problema que criamos o MindAcademy. A proposta é simples e poderosa: integrar o apoio psicológico diretamente dentro do portal acadêmico que os alunos e funcionários já usam todos os dias — o SGA. Uma nova aba. Nada de baixar aplicativo. Nada de acessar outro sistema. Nada de romper a barreira do desconhecido. Com um único clique, o aluno consegue descrever como está se sentindo, escolher o tipo de apoio que precisa e solicitar um atendimento com um profissional especializado. Tudo de forma confidencial, simples e acolhedora. Para os funcionários da instituição, o acesso é igualmente direto. A ferramenta reconhece que saúde mental não é exclusividade dos alunos — professores, técnicos e gestores também precisam de suporte."'
-  },
-  {
-    label: '🎙 Narração — Cena 4 · 1:52–2:32',
-    text: '"Mas o MindAcademy vai além do atendimento por demanda. O que diferencia essa solução é a inteligência proativa. O sistema cruza dados já disponíveis no próprio portal acadêmico para identificar alunos em situação de risco — mesmo antes que eles peçam ajuda. Faltas acima do limite permitido são um sinal de alerta. Quedas bruscas de rendimento acadêmico são outro. Avaliações negativas recebidas por colegas ou professores também entram no radar. Quando um conjunto desses indicadores é detectado, o sistema notifica automaticamente o profissional de saúde mental responsável. Esse profissional então entra em contato direto com o aluno — de forma humanizada, respeitosa e sigilosa. O objetivo não é vigiar. É chegar antes que a situação se agrave. É transformar dado em cuidado."'
-  },
-  {
-    label: '🎙 Narração — Cena 5 · 2:32–3:00',
-    text: '"Saúde mental não é um luxo. Não é um diferencial. É uma condição para que o aprendizado aconteça de verdade. Uma instituição que cuida dos seus alunos e funcionários colhe resultados melhores em retenção, em desempenho, em reputação — e, acima de tudo, em vidas. O MindAcademy é tecnologia a serviço do cuidado. É colocar o apoio onde as pessoas já estão. É fazer com que nenhum aluno precise desaparecer em silêncio. Se a sua instituição acredita que educação vai além da sala de aula — essa solução foi feita para vocês."'
-  },
+  { label: '🎙 Capa — MindAcademy', text: 'Role para baixo ou use as setas do teclado para navegar pelo pitch.' },
+  { label: '🎙 Narração — Cena 1 · 0:00–0:36', text: '"Imagine um aluno que entrou na faculdade cheio de expectativas. Mas aos poucos, as faltas foram aumentando. As notas foram caindo. E ninguém percebeu. Não porque ninguém se importava — mas porque não havia nenhum sistema para identificar esse aluno a tempo. Segundo a Organização Mundial da Saúde, 1 em cada 4 universitários sofre com ansiedade ou depressão durante a graduação. E a grande maioria nunca recebe nenhum tipo de acompanhamento especializado. Isso não é um problema de saúde individual. É um problema institucional. E precisa de uma solução institucional."' },
+  { label: '🎙 Narração — Cena 2 · 0:36–1:12', text: '"As faculdades já possuem serviços de apoio psicológico. Psicólogos, assistentes sociais, núcleos de apoio. Mas existe um abismo entre esses serviços e os alunos que mais precisam deles. Primeiro: a burocracia. Quem está em sofrimento raramente tem energia para navegar em sistemas complexos, preencher formulários ou ligar para marcar consultas. Segundo: a invisibilidade. O aluno que se isola, que para de participar, que desaparece da turma — esse aluno não aparece em nenhum relatório. Terceiro: a demora. Quando finalmente alguém pede ajuda, o problema já escalou para algo muito mais difícil de tratar. E o impacto aparece nas notas, nas faltas, nas desistências — e, nos casos mais graves, em situações que nenhuma instituição quer enfrentar."' },
+  { label: '🎙 Narração — Cena 3 · 1:12–1:52', text: '"É para resolver esse problema que criamos o MindAcademy. A proposta é simples e poderosa: integrar o apoio psicológico diretamente dentro do portal acadêmico que os alunos e funcionários já usam todos os dias — o SGA. Uma nova aba. Nada de baixar aplicativo. Nada de acessar outro sistema. Nada de romper a barreira do desconhecido. Com um único clique, o aluno consegue descrever como está se sentindo, escolher o tipo de apoio que precisa e solicitar um atendimento com um profissional especializado. Tudo de forma confidencial, simples e acolhedora. Para os funcionários da instituição, o acesso é igualmente direto. A ferramenta reconhece que saúde mental não é exclusividade dos alunos — professores, técnicos e gestores também precisam de suporte."' },
+  { label: '🎙 Narração — Cena 4 · 1:52–2:32', text: '"Mas o MindAcademy vai além do atendimento por demanda. O que diferencia essa solução é a inteligência proativa. O sistema cruza dados já disponíveis no próprio portal acadêmico para identificar alunos em situação de risco — mesmo antes que eles peçam ajuda. Faltas acima do limite permitido são um sinal de alerta. Quedas bruscas de rendimento acadêmico são outro. Avaliações negativas recebidas por colegas ou professores também entram no radar. Quando um conjunto desses indicadores é detectado, o sistema notifica automaticamente o profissional de saúde mental responsável. Esse profissional então entra em contato direto com o aluno — de forma humanizada, respeitosa e sigilosa. O objetivo não é vigiar. É chegar antes que a situação se agrave. É transformar dado em cuidado."' },
+  { label: '🎙 Narração — Cena 5 · 2:32–3:00', text: '"Saúde mental não é um luxo. Não é um diferencial. É uma condição para que o aprendizado aconteça de verdade. Uma instituição que cuida dos seus alunos e funcionários colhe resultados melhores em retenção, em desempenho, em reputação — e, acima de tudo, em vidas. O MindAcademy é tecnologia a serviço do cuidado. É colocar o apoio onde as pessoas já estão. É fazer com que nenhum aluno precise desaparecer em silêncio. Se a sua instituição acredita que educação vai além da sala de aula — essa solução foi feita para vocês."' },
 ];
- 
-let current = 0;
- 
+
+/* ═══════════════════════════════════════════════════════
+   ESTADO
+   ═══════════════════════════════════════════════════════ */
+const slides        = document.querySelectorAll('.slide');
+const dots          = document.querySelectorAll('.dot');
+const bar           = document.getElementById('progress-bar');
+const narrLabel     = document.getElementById('narr-label');
+const narrText      = document.getElementById('narr-text');
+const audioEl       = document.getElementById('audio-player');
+const btnPlayPause  = document.getElementById('btn-play-pause');
+const audioBarFill  = document.getElementById('audio-bar-fill');
+const audioCurrent  = document.getElementById('audio-current');
+const audioDuration = document.getElementById('audio-duration');
+const noAudioHint   = document.getElementById('no-audio-hint');
+
+let current      = 0;
+let currentSpeed = 1.25;
+let progressRaf  = null;
+
+/* ─── helpers de tempo ─── */
+function fmtTime(s) {
+  if (!isFinite(s) || isNaN(s)) return '0:00';
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return `${m}:${sec.toString().padStart(2,'0')}`;
+}
+
+/* ─── atualiza barra de progresso do áudio ─── */
+function updateProgress() {
+  if (!audioEl.duration) return;
+  const pct = (audioEl.currentTime / audioEl.duration) * 100;
+  audioBarFill.style.width = pct + '%';
+  audioCurrent.textContent = fmtTime(audioEl.currentTime);
+  progressRaf = requestAnimationFrame(updateProgress);
+}
+
+/* ─── carrega áudio do slide ─── */
+function loadSlideAudio(idx) {
+  cancelAnimationFrame(progressRaf);
+  audioEl.pause();
+  audioEl.removeAttribute('src');
+  audioBarFill.style.width = '0%';
+  audioCurrent.textContent = '0:00';
+  audioDuration.textContent = '0:00';
+  btnPlayPause.textContent = '▶';
+  btnPlayPause.title = 'Play';
+
+  const src = audioFiles[idx];
+  if (!src) {
+    noAudioHint.style.display = 'block';
+    btnPlayPause.disabled = true;
+    btnPlayPause.style.opacity = '0.4';
+    document.getElementById('btn-stop').disabled = true;
+    document.getElementById('btn-stop').style.opacity = '0.4';
+    return;
+  }
+
+  noAudioHint.style.display = 'none';
+  btnPlayPause.disabled = false;
+  btnPlayPause.style.opacity = '1';
+  document.getElementById('btn-stop').disabled = false;
+  document.getElementById('btn-stop').style.opacity = '1';
+
+  audioEl.src = src;
+  audioEl.playbackRate = currentSpeed;
+  audioEl.load();
+
+  audioEl.onloadedmetadata = () => {
+    audioDuration.textContent = fmtTime(audioEl.duration);
+  };
+  audioEl.onended = () => {
+    btnPlayPause.textContent = '▶';
+    btnPlayPause.title = 'Play';
+    cancelAnimationFrame(progressRaf);
+    audioBarFill.style.width = '100%';
+  };
+}
+
+/* ─── play / pause ─── */
+function togglePlayPause() {
+  if (!audioEl.src || audioEl.src === window.location.href) return;
+  if (audioEl.paused) {
+    audioEl.play();
+    btnPlayPause.textContent = '⏸';
+    btnPlayPause.title = 'Pausar';
+    progressRaf = requestAnimationFrame(updateProgress);
+  } else {
+    audioEl.pause();
+    btnPlayPause.textContent = '▶';
+    btnPlayPause.title = 'Play';
+    cancelAnimationFrame(progressRaf);
+  }
+}
+
+/* ─── stop ─── */
+function stopAudio() {
+  audioEl.pause();
+  audioEl.currentTime = 0;
+  btnPlayPause.textContent = '▶';
+  btnPlayPause.title = 'Play';
+  cancelAnimationFrame(progressRaf);
+  audioBarFill.style.width = '0%';
+  audioCurrent.textContent = '0:00';
+}
+
+/* ─── velocidade ─── */
+function setSpeed(v) {
+  currentSpeed = v;
+  audioEl.playbackRate = v;
+  document.querySelectorAll('.btn-speed').forEach(b => {
+    b.classList.toggle('speed-active', parseFloat(b.dataset.speed) === v);
+  });
+}
+
+/* ─── seek ao clicar na barra ─── */
+function seekAudio(e) {
+  if (!audioEl.duration) return;
+  const track = document.getElementById('audio-bar-track');
+  const rect  = track.getBoundingClientRect();
+  const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  audioEl.currentTime = ratio * audioEl.duration;
+  audioBarFill.style.width = (ratio * 100) + '%';
+}
+
+/* ═══════════════════════════════════════════════════════
+   SLIDES — scroll / teclado
+   ═══════════════════════════════════════════════════════ */
 function updateUI(idx) {
   bar.style.width = ((idx + 1) / slides.length * 100) + '%';
   dots.forEach((d, i) => d.classList.toggle('active', i === idx));
   narrLabel.textContent = narrations[idx].label;
   narrText.textContent  = narrations[idx].text;
+  loadSlideAudio(idx);
 }
- 
+
 function goTo(idx) {
   current = idx;
   slides[idx].scrollIntoView({ behavior: 'smooth' });
 }
- 
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add('visible');
       const idx = Array.from(slides).indexOf(e.target);
-      if (idx !== -1) { current = idx; updateUI(idx); }
+      if (idx !== -1 && idx !== current) { current = idx; updateUI(idx); }
     }
   });
 }, { threshold: 0.4 });
- 
+
 slides.forEach(s => observer.observe(s));
- 
+
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowDown' || e.key === 'ArrowRight') goTo(Math.min(current + 1, slides.length - 1));
   if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  goTo(Math.max(current - 1, 0));
+  if (e.key === ' ') { e.preventDefault(); togglePlayPause(); }
 });
- 
+
+/* ─── tabs SGA ─── */
 function switchTab(name) {
   document.querySelectorAll('.sga-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.sga-panel').forEach(p => p.classList.remove('active'));
@@ -509,14 +779,14 @@ function switchTab(name) {
   if (tab)   tab.classList.add('active');
   if (panel) panel.classList.add('active');
 }
- 
+
 function submitApoio() {
   document.getElementById('apoio-form').style.display = 'none';
   document.getElementById('success-msg').style.display = 'block';
 }
- 
+
+/* ─── init ─── */
 updateUI(0);
 </script>
 </body>
 </html>
- 
