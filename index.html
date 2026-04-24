@@ -6,7 +6,7 @@
 <title>MindAcademy — Pitch</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-/* (SEU CSS INTACTO — NÃO MUDEI NADA) */
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --green:#1A6B4A;--green2:#24966A;--lime:#B8F0D4;
@@ -23,7 +23,7 @@ body { font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--white
 .section-tag{font-family:'Syne';font-size:11px;font-weight:600;letter-spacing:.15em;color:var(--green2);text-transform:uppercase;margin-bottom:20px;}
 .slide-title{font-family:'Syne';font-size:clamp(32px,5vw,58px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;max-width:700px;text-align:center;}
 .slide-title em{color:var(--lime);font-style:normal;}
-/* resto do CSS igual */
+
 </style>
 </head>
 <body>
@@ -40,7 +40,7 @@ body { font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--white
 </div>
 
 <div class="slides">
-<!-- (SEU HTML TODO CONTINUA EXATAMENTE IGUAL — NÃO MEXI) -->
+
 </div>
 
 <div class="narr-box" id="narr-box">
@@ -48,7 +48,7 @@ body { font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--white
   <span id="narr-text">Role para baixo ou use as setas do teclado para navegar pelo pitch.</span>
 </div>
 
-<!-- 🔊 AUDIO -->
+
 <audio id="audio-player" preload="auto"></audio>
 
 <script>
@@ -58,7 +58,7 @@ const bar    = document.getElementById('progress-bar');
 const narrLabel = document.getElementById('narr-label');
 const narrText  = document.getElementById('narr-text');
 
-/* 🔊 AUDIOS */
+
 const audio = document.getElementById('audio-player');
 
 const audios = [
@@ -81,7 +81,7 @@ const narrations = [
 
 let current = 0;
 
-/* 🔥 FUNÇÃO ATUALIZADA COM AUDIO */
+
 function updateUI(idx) {
   bar.style.width = ((idx + 1) / slides.length * 100) + '%';
   dots.forEach((d, i) => d.classList.toggle('active', i === idx));
